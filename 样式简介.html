@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        *{
+            margin: 0;
+        }
+        div{
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+    <script src="./echarts.js"></script>
+    <title>样式简介</title>
+</head>
+<body>
+    <div id="main"></div>
+    <script>
+        var main = document.getElementById('main');
+        var myEcharts = echarts.init(main);
+        var option = {
+           color : [
+               '#c23531',
+               '#2f4554',
+               '#61a0a8',
+               '#d48265',
+               '#91c7ae',
+               '#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'
+           ],
+           series : [{
+               type : 'bar',
+               //此系列自己的调色盘
+               color : [
+                   '#dd6b66','#759aa0','#e69d87','#8dc1a9','#ea7e53','#eedd78','#73a373','#73b9bc','#7289ab', '#91ca8c','#f49f42'
+                ]
+           },
+           {
+               type : 'pie',
+               //此系列自己的调色盘
+               color : [
+               '#37A2DA', '#32C5E9', '#67E0E3', '#9FE6B8', '#FFDB5C','#ff9f7f', '#fb7293', '#E062AE', '#E690D1', '#e7bcf3', '#9d96f5', '#8378EA', '#96BFFF'
+               ]
+            }
+        ]
+        };
+        myEcharts.setOption(option);
+    </script>
+</body>
+</html>
