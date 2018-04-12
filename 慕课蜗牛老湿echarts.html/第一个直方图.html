@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        *{
+            margin : 0;
+        }
+        div{
+            width: 900px;
+            height: 600px;
+        }
+    </style>
+    <script src="../echarts.js"></script>
+    <title>第一个柱状图</title>
+</head>
+<body>
+    <div id="main"></div>
+    <script>
+        //基于准备好的dom ，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        //指定图表的配置项和数据
+        var option = {
+            //标题
+            title : {
+                text : '标题：EChart 入门示例'
+            },
+            //工具箱
+            toolbox : {
+                show : true,
+                feature : {
+                    saveAsImage : { //保存图片
+                        show : true
+                    }
+                }
+            },
+            //图例
+            legend : {
+                data : ['销量']
+            },
+            // x轴
+            xAxis : {
+                //x轴的显示信息
+                data : ['x轴：衬衫','羊毛衫','雪纺衫','裤子','高跟鞋','袜子']
+            },
+            yAxis : {},//y轴没有设置值，系统会根据下面数据的数据自动生成一个y轴
+            //数据
+            series : [{
+                name : '销量',
+                type : 'bar',
+                data : [5, 20, 36, 10, 10, 20]
+            }]
+        };
+        //使用刚指定的配置项和数据显示图表
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
