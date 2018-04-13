@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../bootstrap.css">
+    <script src="../../echarts.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script src="../../jquery-3.3.1.js"></script>
+    <script src="../../bootstrap.js"></script>
+    <style>
+        form,button{
+            margin-top: 20px;
+        }
+        #main{
+            margin-top: 20px;
+        }
+    </style>
+    <title>地图标记</title>
+</head>
+<body>
+    <!-- 
+        申请百度地图开发api
+        异步加载数据，获取经纬度
+        绘图，在地图上做标记
+        项目扩展
+            手机号来源地查询，ip地址查询
+     -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-horizontal">
+                <input type="text" id="place-input" class="form-control" value="趵突泉" placeholder="请输入地址">
+                <button type="button" id="search-btn" class="btn btn-success">
+                    查询
+                </button>
+            </form>
+        </div>
+        <div class="col-md 6">
+            <div id="main" style="height:500px"></div>
+        </div>
+    </div>
+</div>
+<script>
+    //地图必须要经纬度数据
+
+    //百度地图的开发者秘钥
+    var token = 'clR7lmWlaguV9WUYKM7OGMbj'
+    var url = 'http://map.baidu.com/geocoder/v2/?output=json&ak=' + token + '&address='
+    //
+    var ePlaceInput = $('#place-input');
+    var eSearchBtn = $('#search-btn');
+    var myChart = echarts.init(document.getElementById('main'));
+    var chartData = [];
+    eSearchBtn.click(function() {
+        //获取输入框的值
+        var place = ePlaceInput.val();
+        if(place) {
+            $.getJSON(url + place + '&callback=?', function (res) {
+                var loc;
+                if(res.status === 0) {
+                    loc = res.result.location;
+                    chartData.push({
+                        name : name,
+                        value : [loc.lng, loc.lat]
+                    })
+                    drawMap(place)
+                    // console.log(place, res.result)
+                    //此处报错，404，找不到页面
+                }else {
+                    alert('百度没有找到地址信息')
+                }
+            })
+        }
+    })
+    function drawMap(name) {
+        var option = {
+            backgroundColor : '#404a59',
+            title : {
+                text : '地址搜索',
+                left : 'center',
+                textStyle : {
+                    color : '#fff'
+                }
+            },
+            tooltip : {
+                trigger : 'item'
+            },
+            toolbox : {
+                show : true,
+                feature : {
+                    saveAsImage : {
+                        show : true
+                    }
+                }
+            },
+            geo : {
+                map : 'china',
+                label : {
+                    emphasis : {
+                        show : false
+                    }
+                },
+                roam : true,
+                itemStyle : {
+                    normal : {
+                        areaColor : '#323c48',
+                        borderColor : '#111'
+                    },
+                    emphasis : {
+                        areaColor : '#2a333d'
+                    }
+                }
+            },
+            series : [{
+                name : '地址',
+                type : 'scatter',
+                coordinateSystem : 'geo',
+                data : chartData,
+                symbolSize : function (val) {
+                    return 10;
+                }
+            }]
+        }
+        myChart.setOption(option)
+    }
+</script>
+</body>
+</html>
