@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title> 查询地址 </title>
+</head>
+<script language="javascript">
+    function getValue() {
+        var v = document.getElementById("username");
+        alert("http://api.map.baidu.com/geocoder?address=" + v.value + "&output=html&src=yourCompanyName|yourAppName");
+        window.open("http://api.map.baidu.com/geocoder?address=" + v.value + "&output=html&src=yourCompanyName|yourAppName");
+    }
+</script>
+
+<body>
+    <form>
+        username:
+        <input type="text" id="username" />
+        <input type="submit" value="submit" onclick="getValue()" />
+    </form>
+</body>
+
+</html>
